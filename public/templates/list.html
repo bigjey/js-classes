@@ -1,12 +1,15 @@
 <div class="container">
   
-  <table class="table">
+  <table class="table" ng-show="phones.length > 0">
     <tr>
       <th>
         id
       </th>
       <th>
         snippet
+      </th>
+      <th>
+        price
       </th>
       <th></th>
     </tr>
@@ -17,8 +20,15 @@
       <td>
         {{el.snippet}}
       </td>
+      <td>
+        {{el.price}}
+      </td>
       <td><button class="btn btn-danger btn-xs" ng-click="removePhone(el.id)">Remove</button></td>
     </tr>
   </table>
+
+  <div class="alert alert-warning" ng-show="phones.length === 0">
+    Данных пока нету, воспользуйтесь <b><a href="#/create">формой</a></b> для создания
+  </div>
 
 </div>

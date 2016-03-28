@@ -21,13 +21,19 @@ function phonesService($http){
     return _phones;
   }
 
+  function addPhone(data){
+    _phones.push(data);
+    _save();
+  }
+
   function _save(){
     localStorage.setItem('phones', JSON.stringify(_phones));
   }
 
   return {
     getPhones: getPhones,
-    removePhone: removePhone
+    removePhone: removePhone,
+    addPhone: addPhone
   };
 
 }

@@ -14,4 +14,7 @@ myApp.config(['$routeProvider', function($routeProvider){
       templateUrl: '/templates/create.html',
       controller: 'createCtrl'
     })
+    .otherwise({
+      redirectTo: '/list'
+    })
 }]);
