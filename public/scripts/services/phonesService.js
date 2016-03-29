@@ -4,8 +4,7 @@ angular.module('myApp')
 
 function phonesService($http){
 
-  var _phones = [];
-  _phones = JSON.parse(localStorage.getItem('phones'));
+  var _phones = JSON.parse(localStorage.getItem('phones')) || [];
 
   function getPhones(){
     return _phones;
