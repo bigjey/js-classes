@@ -10,12 +10,18 @@
     <tr>
       <th>
         <a href="" ng-click="setOrderProp('name')">id
-          
+          <orderarrow 
+            ng-show="orderProp === 'name'" 
+            direction="{{orderReversed}}"
+          ></orderarrow>
         </a>
       </th>
       <th>
         <a href="" ng-click="setOrderProp('snippet')">snippet
-          <orderArrow prop="snippet"></orderArrow>
+          <orderarrow 
+            ng-show="orderProp === 'snippet'" 
+            direction="{{orderReversed}}"
+          ></orderarrow>
         </a>
       </th>
       <th>
@@ -23,7 +29,10 @@
       </th>
       <th>
         <a href="" ng-click="setOrderProp('price')">price
-          
+          <orderarrow 
+            ng-show="orderProp === 'price'" 
+            direction="{{orderReversed}}"
+          ></orderarrow>
         </a>
         
       </th>
