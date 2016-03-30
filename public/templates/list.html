@@ -1,24 +1,45 @@
 <div class="container">
+
+  <form name="filter">
+    <div class="form-group">
+      <input name="search" ng-model="search" type="text" class="form-control input-lg" placeholder="Search by name or snippet">
+    </div>
+  </form>
   
   <table class="table" ng-show="phones.length > 0">
     <tr>
       <th>
-        id
+        <a href="" ng-click="setOrderProp('name')">id
+          
+        </a>
       </th>
       <th>
-        snippet
+        <a href="" ng-click="setOrderProp('snippet')">snippet
+          <orderArrow prop="snippet"></orderArrow>
+        </a>
       </th>
       <th>
-        price
+        tags
+      </th>
+      <th>
+        <a href="" ng-click="setOrderProp('price')">price
+          
+        </a>
+        
       </th>
       <th></th>
     </tr>
-    <tr ng-repeat="el in phones">
+    <tr ng-repeat="el in phones | filter:search | orderBy:orderProp:orderReversed">
       <td>
         <a href="#/item/{{el.id}}">{{el.name}}</a>
       </td>
       <td>
         {{el.snippet}}
+      </td>
+      <td>
+        <ul>
+          <li ng-repeat="tag in el.tags">{{tag}}</li>
+        </ul>
       </td>
       <td>
         {{el.price}}

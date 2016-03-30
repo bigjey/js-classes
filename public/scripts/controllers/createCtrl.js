@@ -4,10 +4,10 @@ angular.module('myApp')
 function createCtrl($scope, $timeout, phonesService) {
 
   $scope.alerts = [];
-
+  
   $scope.addPhone = function(){
     if ($scope.addForm.$valid){
-      phonesService.addPhone(_serializeForm());      
+      phonesService.addPhone(_serializeForm());
       _createAlert('success', 'Товар "' + $scope.name + '" добавлен', true);
     } else {
       _createAlert('danger', 'В форме есть ошибки', true);
@@ -25,6 +25,9 @@ function createCtrl($scope, $timeout, phonesService) {
       id: $scope.id,
       name: $scope.name,
       snippet: $scope.snippet,
+      tags: $scope.tags.map(function(tag){
+        return tag.text
+      }),
       price: $scope.price
     }
   }
