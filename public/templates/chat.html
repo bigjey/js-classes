@@ -1,0 +1,28 @@
+<div class="container">
+  
+  <div class="pull-right">
+    <label>Send as:</label><br>
+    <input type="text" class="form-control input-sm" ng-model="username" style="width: 150px; display: inline-block;">
+  </div>
+
+  <h2>Chat sandbox</h2>
+  <div>Online: {{userCount}}</div>
+
+  <br>
+
+  <div class="clearfix"></div>
+
+  <form ng-submit="sendMessage()">
+    <div class="form-group">
+      <label>Message:</label>
+      <input type="text" class="form-control" autofocus ng-model="message" ng-keyup="$event.keyCode == 13 && sendMessage()">
+    </div>    
+  </form>
+
+  <ul style="list-style: none; padding: 0; margin: 0; height: 300px; overflow: auto;" id="chatbox">
+    <li ng-repeat="msg in messages track by $index" style="padding-bottom: 5px;">
+      <span class="text-muted" style="display: inline-block; width: 80px; overflow: hidden; vertical-align: top; margin-right: 10px;">{{msg.username}}</span> {{msg.content}}
+    </li>
+  </ul>
+
+</div>

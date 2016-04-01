@@ -14,6 +14,13 @@ myApp.config(['$routeProvider', function($routeProvider){
       templateUrl: '/templates/create.html',
       controller: 'createCtrl'
     })
+
+    // chat sandbox
+    .when('/chat', {
+      templateUrl: '/templates/chat.html',
+      controller: 'chatCtrl'
+    })
+
     .otherwise({
       redirectTo: '/products'
     })

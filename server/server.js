@@ -4,6 +4,42 @@ var path = require('path');
 var app = express();
 var port = 5325;
 
+// app start
+var server = app.listen(port, function(){
+  console.log('app is running at http://10.10.4.166:%s', port);
+});
+
+
+// chat sandbox
+var io = require('socket.io')(server);
+
+var chatUsers = 0;
+var chatHistory = [];
+var chatHistoryMax = 10;
+
+io.on('connection', function(socket){
+
+  socket.emit('userCount', ++chatUsers)
+
+  socket.on('getHistory', function(){
+    socket.emit('history', chatHistory);
+  })
+
+  socket.on('chatMessage', function(message){
+    if (chatHistory.length >= chatHistoryMax) chatHistory.shift();
+    
+    chatHistory.push(message);
+    
+    socket.broadcast.emit('chatMessage', message);
+  })
+
+  socket.on('disconnect', function(){
+    io.emit('userCount', --chatUsers)
+  })
+
+})
+
+
 // middlwares
 
 // serve static files from node_modules
@@ -21,8 +57,3 @@ app.use(express.static(
 app.get('*', function(req, res){
   res.sendFile(path.resolve(__dirname + '/../public/app.html'));
 })
-
-// app start
-app.listen(port, function(){
-  console.log('app is running at http://localhost:%s', port);
-});
