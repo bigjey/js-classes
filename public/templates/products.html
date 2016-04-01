@@ -1,0 +1,72 @@
+<div class="container">
+
+  <h2>Products list</h2>
+
+  <br>
+
+  <div class="alert alert-warning" ng-show="products.length === 0">
+    Данных пока нету, воспользуйтесь <b><a href="#/create">формой</a></b> для создания
+  </div>
+
+  <form name="filter" ng-show="products.length > 1">
+    <div class="form-group">
+      <input name="search" ng-model="search" type="text" class="form-control input-lg" placeholder="Search by name or snippet" autofocus>
+    </div>
+  </form>
+  
+  <table class="table table-striped" ng-show="products.length > 0">
+    <thead>
+      <tr>
+        <th>
+          <a href="" ng-click="setOrderProp('name')">id
+            <orderarrow 
+              ng-show="orderProp === 'name'" 
+              direction="{{orderReversed}}"
+            ></orderarrow>
+          </a>
+        </th>
+        <th>
+          <a href="" ng-click="setOrderProp('snippet')">snippet
+            <orderarrow 
+              ng-show="orderProp === 'snippet'" 
+              direction="{{orderReversed}}"
+            ></orderarrow>
+          </a>
+        </th>
+        <th>
+          tags
+        </th>
+        <th>
+          <a href="" ng-click="setOrderProp('price')">price
+            <orderarrow 
+              ng-show="orderProp === 'price'" 
+              direction="{{orderReversed}}"
+            ></orderarrow>
+          </a>
+          
+        </th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="el in products | filter:search | orderBy:orderProp:orderReversed track by $index">
+        <td>
+          <a href="#/product/{{el.id}}">{{el.name}}</a>
+        </td>
+        <td>
+          {{el.snippet}}
+        </td>
+        <td>
+          <ul>
+            <li ng-repeat="tag in el.tags">{{tag}}</li>
+          </ul>
+        </td>
+        <td>
+          {{el.price}}
+        </td>
+        <td><button class="btn btn-danger btn-xs" ng-click="handleRemoveClick(el.id)">Remove</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>

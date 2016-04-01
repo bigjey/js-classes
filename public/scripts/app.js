@@ -2,19 +2,19 @@ var myApp = angular.module('myApp', ['ngRoute', 'ngTagsInput']);
 
 myApp.config(['$routeProvider', function($routeProvider){
   $routeProvider
-    .when('/list', {
-      templateUrl: '/templates/list.html',
-      controller: 'listCtrl'
+    .when('/products', {
+      templateUrl: '/templates/products.html',
+      controller: 'productsCtrl'
     })
-    .when('/item/:id', {
-      templateUrl: '/templates/item.html',
-      controller: 'itemCtrl'
+    .when('/product/:id', {
+      templateUrl: '/templates/product.html',
+      controller: 'productItemCtrl'
     })
     .when('/create', {
       templateUrl: '/templates/create.html',
       controller: 'createCtrl'
     })
     .otherwise({
-      redirectTo: '/list'
+      redirectTo: '/products'
     })
 }]);
