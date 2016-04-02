@@ -1,7 +1,7 @@
 angular.module('myApp')
 
-.controller('productsCtrl', ['$scope', '$http', 'productsService', productsCtrl]);
-function productsCtrl($scope, $http, productsService) {
+.controller('productsCtrl', ['$scope', '$http', 'productsService', 'socketsService', productsCtrl]);
+function productsCtrl($scope, $http, productsService, socketsService) {
 
   $scope.products = productsService.getProducts();
 
@@ -21,5 +21,14 @@ function productsCtrl($scope, $http, productsService) {
     }
     
   }
+
+  socketsService.on('newProduct', function(){
+    $scope.$apply();
+  })
+
+  socketsService.on('productDelete', function(){
+    $scope.products = productsService.getProducts();
+    $scope.$apply();
+  })
 
 }

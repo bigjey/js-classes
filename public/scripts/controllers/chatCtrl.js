@@ -4,7 +4,8 @@ angular.module('myApp')
 
 function chatCtrl($scope, $timeout){
 
-  var socket = io.connect('http://10.10.4.166:5325');
+  var socket = io.connect('http://localhost:5325');
+  socket.emit('getHistory');
 
   $scope.messages = [];
   $scope.message = '';
@@ -28,15 +29,17 @@ function chatCtrl($scope, $timeout){
     $scope.message = '';
   }
 
-  socket.emit('getHistory');
+  
 
   socket.on('history', function(messages){
     $scope.messages = messages;
     $scope.$apply();
+
   })
 
   socket.on('chatMessage', function(message){
     addMessageToChatbox(message);
+    $scope.$apply();
   })
 
   socket.on('userCount', function(count){

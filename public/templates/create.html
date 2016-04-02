@@ -8,12 +8,6 @@
 
       <notifications group="{{notificationsGroup}}"></notifications>
 
-      <div class="form-group" ng-class="{'has-error': addForm.id.$invalid && !addForm.id.$pristine}">
-        <label>Id</label>
-        <input type="text" class="form-control" ng-model="formData.id" name='id' required autocomplete="off">
-        <div class="help-block" ng-show="addForm.id.$invalid && !addForm.id.$pristine">Required</div>
-      </div>
-
       <div class="form-group" ng-class="{'has-error': addForm.name.$invalid && !addForm.name.$pristine}">
         <label>Name</label>
         <input type="text" class="form-control" ng-model="formData.name" name='name' required autocomplete="off">

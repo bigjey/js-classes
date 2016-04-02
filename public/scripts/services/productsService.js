@@ -1,12 +1,28 @@
 angular.module('myApp')
 
-.service('productsService', [productsService])
+.service('productsService', ['socketsService', 'notificationService', productsService])
 
-function productsService(){
+function productsService(socketsService, notificationService){
 
   var _storageKey = 'products';
 
   var _products = JSON.parse(localStorage.getItem(_storageKey)) || [];
+
+  socketsService.on('newProduct', function(product) {
+    _products.push(product);    
+    _save();
+
+    notificationService.createNotification({
+      group: 'list',
+      type: 'info',
+      text: 'Ктото добавил товар',
+      autoHide: true
+    })
+  })
+
+  socketsService.on('productDelete', function(id){
+    removeProduct(id);
+  })
 
   function getProducts(){
     return _products;
@@ -20,6 +36,9 @@ function productsService(){
   function removeProduct(id){
     if (_products.length > 0){
       _products = _products.filter(function(p){
+        if (p.id === id){
+          socketsService.emit('productDelete', id);
+        }
         return p.id !== id;
       })
     }

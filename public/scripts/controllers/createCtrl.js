@@ -1,7 +1,7 @@
 angular.module('myApp')
 
-.controller('createCtrl', ['$scope', 'productsService', 'notificationService', createCtrl]);
-function createCtrl($scope, productsService, notificationService) {
+.controller('createCtrl', ['$scope', 'productsService', 'notificationService', 'socketsService', createCtrl]);
+function createCtrl($scope, productsService, notificationService, socketsService) {
 
   $scope.notificationsGroup = 'create';
 
@@ -11,7 +11,11 @@ function createCtrl($scope, productsService, notificationService) {
 
     if ($scope.addForm.$valid){
 
-      productsService.addProduct(_serializeForm());
+      var product = _serializeForm();
+
+      productsService.addProduct(product);
+
+      socketsService.emit('newProduct', product);
 
       notificationService.createNotification({
         group: $scope.notificationsGroup,
@@ -37,7 +41,7 @@ function createCtrl($scope, productsService, notificationService) {
 
   function _serializeForm(){
     return {
-      id: $scope.formData.id,
+      id: Date.now(),
       name: $scope.formData.name,
       snippet: $scope.formData.snippet,
       tags: $scope.formData.tags && $scope.formData.tags.map(function(tag){

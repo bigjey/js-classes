@@ -19,7 +19,7 @@ var chatHistoryMax = 10;
 
 io.on('connection', function(socket){
 
-  socket.emit('userCount', ++chatUsers)
+  io.emit('userCount', ++chatUsers);
 
   socket.on('getHistory', function(){
     socket.emit('history', chatHistory);
@@ -31,6 +31,14 @@ io.on('connection', function(socket){
     chatHistory.push(message);
     
     socket.broadcast.emit('chatMessage', message);
+  })
+
+  socket.on('newProduct', function(product) {
+    socket.broadcast.emit('newProduct', product);
+  })
+
+  socket.on('productDelete', function(id) {
+    socket.broadcast.emit('productDelete', id);
   })
 
   socket.on('disconnect', function(){

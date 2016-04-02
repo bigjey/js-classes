@@ -2,6 +2,8 @@
 
   <h2>Products list</h2>
 
+  <notifications group="list"></notifications>
+
   <br>
 
   <div class="alert alert-warning" ng-show="products.length === 0">
@@ -18,7 +20,7 @@
     <thead>
       <tr>
         <th>
-          <a href="" ng-click="setOrderProp('name')">id
+          <a href="" ng-click="setOrderProp('name')">Name
             <orderarrow 
               ng-show="orderProp === 'name'" 
               direction="{{orderReversed}}"
@@ -26,7 +28,7 @@
           </a>
         </th>
         <th>
-          <a href="" ng-click="setOrderProp('snippet')">snippet
+          <a href="" ng-click="setOrderProp('snippet')">Snippet
             <orderarrow 
               ng-show="orderProp === 'snippet'" 
               direction="{{orderReversed}}"
@@ -37,7 +39,7 @@
           tags
         </th>
         <th>
-          <a href="" ng-click="setOrderProp('price')">price
+          <a href="" ng-click="setOrderProp('price')">Price
             <orderarrow 
               ng-show="orderProp === 'price'" 
               direction="{{orderReversed}}"
