@@ -4,6 +4,29 @@ var path = require('path');
 var app = express();
 var port = 5325;
 
+var userCount = 0;
+// app start
+var server = app.listen(port, function(){
+  console.log('app is running at http://localhost:%s', port);
+});
+
+var socketServer = require("socket.io")(server);
+
+socketServer.on('connection', function(user) {
+  user.emit('Hello, fuckface');
+
+  socketServer.emit('User Count', ++userCount);
+
+  user.on('disconnect', function() {
+    --userCount;
+    socketServer.emit('User Count', userCount);
+  });
+
+  user.on('chatMessage', function(message) {
+    user.broadcast.emit('serverChatMessage', message);
+  })
+});
+
 // middlwares
 
 // serve static files from node_modules
@@ -21,8 +44,3 @@ app.use(express.static(
 app.get('*', function(req, res){
   res.sendFile(path.resolve(__dirname + '/../public/app.html'));
 })
-
-// app start
-app.listen(port, function(){
-  console.log('app is running at http://localhost:%s', port);
-});
