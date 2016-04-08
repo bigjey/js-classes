@@ -9,8 +9,7 @@ function productsService(socketsService, notificationService){
   var _products = JSON.parse(localStorage.getItem(_storageKey)) || [];
 
   socketsService.on('newProduct', function(product) {
-    _products.push(product);    
-    _save();
+    addProduct(product, false)
 
     notificationService.createNotification({
       group: 'list',
@@ -21,22 +20,26 @@ function productsService(socketsService, notificationService){
   })
 
   socketsService.on('productDelete', function(id){
-    removeProduct(id);
+    removeProduct(id, false);
   })
 
   function getProducts(){
     return _products;
   }
 
-  function addProduct(data){
+  function addProduct(data, doEmit){
     _products.push(data);
     _save();
+
+    if (doEmit){
+      socketsService.emit('newProduct', data);
+    }
   }
 
-  function removeProduct(id){
+  function removeProduct(id, doEmit){
     if (_products.length > 0){
       _products = _products.filter(function(p){
-        if (p.id === id){
+        if (p.id === id && doEmit){
           socketsService.emit('productDelete', id);
         }
         return p.id !== id;

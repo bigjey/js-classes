@@ -9,7 +9,7 @@ function productsCtrl($scope, $http, productsService, socketsService) {
   $scope.orderReversed = true;
 
   $scope.handleRemoveClick = function(id){
-    $scope.products = productsService.removeProduct(id);
+    $scope.products = productsService.removeProduct(id, true);
   }
 
   $scope.setOrderProp = function(newProp){

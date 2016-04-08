@@ -1,7 +1,7 @@
 angular.module('myApp')
 
-.controller('createCtrl', ['$scope', 'productsService', 'notificationService', 'socketsService', createCtrl]);
-function createCtrl($scope, productsService, notificationService, socketsService) {
+.controller('createCtrl', ['$scope', 'productsService', 'notificationService', createCtrl]);
+function createCtrl($scope, productsService, notificationService) {
 
   $scope.notificationsGroup = 'create';
 
@@ -13,9 +13,7 @@ function createCtrl($scope, productsService, notificationService, socketsService
 
       var product = _serializeForm();
 
-      productsService.addProduct(product);
-
-      socketsService.emit('newProduct', product);
+      productsService.addProduct(product, true);
 
       notificationService.createNotification({
         group: $scope.notificationsGroup,
