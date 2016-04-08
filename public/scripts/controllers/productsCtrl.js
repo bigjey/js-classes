@@ -3,7 +3,12 @@ angular.module('myApp')
 .controller('productsCtrl', ['$scope', '$http', 'productsService', productsCtrl]);
 function productsCtrl($scope, $http, productsService) {
 
-  $scope.products = productsService.getProducts();
+  $scope.loading = true;
+
+  productsService.getProducts().then(function(res) {
+    $scope.products = res.data;
+    $scope.loading = false;
+  });
 
   $scope.orderProp = '';
   $scope.orderReversed = true;

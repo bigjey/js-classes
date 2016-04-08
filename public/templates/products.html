@@ -2,6 +2,10 @@
 
   <h2>Products list</h2>
 
+  <div ng-show="loading">
+    Loading producs...
+  </div>
+
   <br>
 
   <div class="alert alert-warning" ng-show="products.length === 0">

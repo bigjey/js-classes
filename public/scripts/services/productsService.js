@@ -1,15 +1,17 @@
 angular.module('myApp')
 
-.service('productsService', [productsService])
+.service('productsService', ['$http', productsService])
 
-function productsService(){
+function productsService($http){
+
+
 
   var _storageKey = 'products';
 
   var _products = JSON.parse(localStorage.getItem(_storageKey)) || [];
 
   function getProducts(){
-    return _products;
+    return $http.get('/api/products');
   }
 
   function addProduct(data){
