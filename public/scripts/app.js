@@ -10,9 +10,15 @@ myApp.config(['$routeProvider', function($routeProvider){
       templateUrl: '/templates/product.html',
       controller: 'productItemCtrl'
     })
-    .when('/create', {
-      templateUrl: '/templates/create.html',
-      controller: 'createCtrl'
+    .when('/form/:id', {
+      templateUrl: '/templates/form.html',
+      controller: 'formCtrl',
+      isNewModel: false
+    })
+    .when('/form', {
+      templateUrl: '/templates/form.html',
+      controller: 'formCtrl',
+      isNewModel: true
     })
     .otherwise({
       redirectTo: '/products'

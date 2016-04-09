@@ -3,6 +3,8 @@ angular.module('myApp')
 .controller('productsCtrl', ['$scope', '$http', 'productsService', productsCtrl]);
 function productsCtrl($scope, $http, productsService) {
 
+  $scope.orderProp = '';
+  $scope.orderReversed = true;
   $scope.loading = true;
 
   productsService.getProducts().then(function(res) {
@@ -10,11 +12,15 @@ function productsCtrl($scope, $http, productsService) {
     $scope.loading = false;
   });
 
-  $scope.orderProp = '';
-  $scope.orderReversed = true;
-
   $scope.handleRemoveClick = function(id){
-    $scope.products = productsService.removeProduct(id);
+    productsService.removeProduct(id).then(function(res) {
+      if(res.status === 200) {
+        $scope.products = $scope.products.filter(function(item) {
+          return item._id !== id;
+        })
+      }
+    });;
+
   }
 
   $scope.setOrderProp = function(newProp){

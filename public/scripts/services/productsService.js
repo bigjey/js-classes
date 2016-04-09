@@ -4,39 +4,32 @@ angular.module('myApp')
 
 function productsService($http){
 
-
-
-  var _storageKey = 'products';
-
-  var _products = JSON.parse(localStorage.getItem(_storageKey)) || [];
-
   function getProducts(){
     return $http.get('/api/products');
   }
 
   function addProduct(data){
-    _products.push(data);
-    _save();
+    $http.post('/api/products', data);
+  }
+
+  function getOneProduct(id){
+    return $http.get('/api/products/' + id);
+  }
+
+  function updateProduct(id, data) {
+    return $http.put('/api/products/' + id, data);
   }
 
   function removeProduct(id){
-    if (_products.length > 0){
-      _products = _products.filter(function(p){
-        return p.id !== id;
-      })
-    }
-    _save();
-    return _products;
-  }
-
-  function _save(){
-    localStorage.setItem(_storageKey, JSON.stringify(_products));
+    return $http.delete('/api/products/' + id);    
   }
 
   return {
     getProducts: getProducts,
     removeProduct: removeProduct,
-    addProduct: addProduct
+    addProduct: addProduct,
+    getOneProduct: getOneProduct,
+    updateProduct: updateProduct
   };
 
 }

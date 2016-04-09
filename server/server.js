@@ -12,10 +12,9 @@ app.use(bodyParser.urlencoded({
 }));
 
 var mongoose = require('mongoose');
-
 var dbUser = 'js-classes';
 var dbPassword = 'cv7654321';
-var dbUrl = 'mongodb://' + dbUser + ':' + dbPassword + '@ds013260.mlab.com:13260/baraholka';
+var dbUrl = `mongodb://${dbUser}:${dbPassword}@ds013260.mlab.com:13260/baraholka`;
 
 mongoose.connect(dbUrl);
 
@@ -38,12 +37,66 @@ app.use(express.static(
 var apiRouter =  express.Router();
 
 apiRouter.route('/products')
+
   .get(function(req, res){
+
     Product.find({}, function(err, docs) {
-      if (err) throw new err;
+      if (err) throw err;
 
       res.json(docs);
     })
+
+  })
+
+  .post(function(req, res) {
+
+    Product.create(req.body, function(err, doc){
+      if (err) {
+        res.json({
+          success: false,
+          errors: err.errors
+        })
+        return;
+      }
+
+      res.json({
+        success: true
+      })
+    })
+
+  })
+
+apiRouter.route('/products/:id')
+  .get(function(req, res) {
+
+    Product.findById(req.params.id, function(err, doc) {
+      if (err) throw err;
+
+      res.json(doc);
+    })
+
+  })
+  .put(function(req, res) {
+    
+    Product.findByIdAndUpdate(req.params.id, req.body, {new: true}, function(err, doc) {
+      if (err) throw err;
+
+      res.json(doc);
+    })
+
+  })
+  .delete(function(req, res) {
+
+    Product.findByIdAndRemove(req.params.id, function(err, doc) {
+      if (err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
+      }
+
+      res.sendStatus(200);
+    })
+
   })
 
 app.use('/api', apiRouter);

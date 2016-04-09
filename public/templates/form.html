@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="row">
+
+    <form class="col-sm-8 col-md-6 form" name="addForm" novalidate ng-submit="handleSubmit()">
+
+      <div class="text-center" ng-if="loading">
+        <i class="fa fa-2x fa-spinner fa-spin"></i>
+      </div>
+
+      <div ng-if="!loading">
+
+        <h2 ng-if="isNew">New Product</h2>
+        <h2 ng-if="!isNew">Edit "{{formData.name}}"</h2>
+
+        <br>
+
+        <notifications group="{{notificationsGroup}}"></notifications>
+
+        <div class="form-group" ng-class="{'has-error': addForm.name.$invalid && !addForm.name.$pristine}">
+          <label>Name</label>
+          <input type="text" class="form-control" ng-model="formData.name" name='name' required autocomplete="off" />
+          <div class="help-block" ng-show="addForm.name.$invalid && !addForm.name.$pristine">Required</div>
+        </div>
+
+        <div class="form-group">
+          <label>Tags</label>
+          <tags-input ng-model="formData.tags"></tags-input>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': addForm.price.$invalid && !addForm.price.$pristine}">
+          <label>Price</label>
+          <input type="number" max="150" min="0" class="form-control" ng-model="formData.price" name='price' required autocomplete="off">
+          <div class="help-block" ng-show="addForm.price.$invalid && !addForm.price.$pristine">Required, between 0 and 150 </div>
+        </div>
+
+        <div class="form-group" ng-class="{'has-error': addForm.snippet.$invalid && !addForm.snippet.$pristine}">
+          <label>Snippet</label>
+          <textarea class="form-control" ng-model="formData.snippet" name='snippet' required></textarea>
+          <div class="help-block" ng-show="addForm.snippet.$invalid && !addForm.snippet.$pristine">Required</div>
+        </div>
+
+        <div class="form-group">
+          <button class="btn btn-default btn-lg" ng-disabled="addForm.$invalid">
+            <span ng-if="isNew">Add</span>
+            <span ng-if="!isNew">Save</span>
+          </button>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
+</div>
