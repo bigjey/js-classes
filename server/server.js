@@ -12,8 +12,17 @@ var server = app.listen(port, function(){
 
 var socketServer = require("socket.io")(server);
 
+var chatHistory = [];
+
 socketServer.on('connection', function(user) {
-  user.emit('Hello, fuckface');
+  
+  user.emit('history', {
+    messages: chatHistory
+  });
+
+  user.on('username', function(data) {
+    user.username = data.name;
+  })
 
   socketServer.emit('User Count', ++userCount);
 
@@ -22,7 +31,12 @@ socketServer.on('connection', function(user) {
     socketServer.emit('User Count', userCount);
   });
 
-  user.on('chatMessage', function(message) {
+  user.on('chatMessage', function(data) {
+    var message = {
+      username: user.username,
+      text: data.text
+    }
+    chatHistory.push(message);
     user.broadcast.emit('serverChatMessage', message);
   })
 });

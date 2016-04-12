@@ -1,6 +1,16 @@
 <div>Fucker Count: {{userCount}}</div>
+
+<input type="text" ng-model="username">
+<button ng-click="changeLogin()">changeLogin</button>
+<br>
+<br>
+
+
 <input type="text" data-ng-model="message">
 <button data-ng-click="send()">Send</button>
 <ul>
-  <li data-ng-repeat="message in messages">{{message}}</li>
+  <li data-ng-repeat="msg in messages">
+    <b>{{msg.username}}</b><br>
+    {{msg.text}}
+  </li>
 </ul>
