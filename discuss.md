@@ -1,1 +1,2 @@
 - nested $scopes
+- user authtentication
